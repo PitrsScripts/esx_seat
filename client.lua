@@ -1,9 +1,9 @@
-local actionkey=21 --Lshift (or whatever your sprint key is bound to)
+local actionkey=2767671 --Lshift (or whatever your sprint key is bound to)
 local allowshuffle = false
 local playerped=nil
 local currentvehicle=nil
-local elapsed=0
 
+--getting vars
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(100)
@@ -13,6 +13,8 @@ Citizen.CreateThread(function()
 		currentvehicle=GetVehiclePedIsIn(playerped, false)
 	end
 end)
+
+
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(100)
@@ -37,6 +39,8 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+
+
 RegisterNetEvent("SeatShuffle")
 AddEventHandler("SeatShuffle", function()
 	if IsPedInAnyVehicle(playerped, false) then
@@ -61,6 +65,10 @@ AddEventHandler("SeatShuffle", function()
 		CancelEvent('SeatShuffle')
 	end
 end)
+
+
+local elapsed=0
+--thread to get duration of key press
 Citizen.CreateThread(function()
   while true do
 	Citizen.Wait(0)
@@ -71,6 +79,9 @@ Citizen.CreateThread(function()
 	end
   end
 end)
+
+
+
 Citizen.CreateThread(function()
   while true do
   --if the press the control then start the animation
@@ -94,3 +105,6 @@ Citizen.CreateThread(function()
   end
 end)
 
+RegisterCommand("shuff", function(source, args, raw) --change command here
+    TriggerEvent("SeatShuffle")
+end, false) --False, allow everyone to run it
